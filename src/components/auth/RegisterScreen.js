@@ -2,8 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "../../hooks/useForm";
 import validator from "validator";
+import { useDispatch, useSelector } from "react-redux";
+import { removeError, setError } from "../../actions/ui";
+import { startRegisterWithEmailPasswordName } from "../../actions/auth";
 
 export const RegisterScreen = () => {
+  const dispatch = useDispatch();
+  const { msgError } = useSelector((state) => state.ui);
+
   const [formValues, handleInputChange] = useForm({
     name: "Leandro",
     email: "lean23@gmail.com",
@@ -16,34 +22,39 @@ export const RegisterScreen = () => {
   const handleRegister = (e) => {
     e.preventDefault();
     if (isFormValid()) {
-      console.log("formulario correcto");
+      dispatch(startRegisterWithEmailPasswordName(email, password, name));
     }
   };
 
   const isFormValid = () => {
     if (name.trim().length === 0) {
-      console.log("name is required");
+      dispatch(setError("El nombre no es valido"));
+
       return false;
     } else if (!validator.isEmail(email)) {
-      console.log("email is not valid");
+      dispatch(setError("El email no es valido"));
       return false;
     } else if (password !== password2 || password.length < 5) {
-      console.log(
-        "password should be at least 6 characters and match each other"
+      dispatch(
+        setError(
+          "La contraseña debe tener al menos 6 caracteres y ser igual a su confirmacion"
+        )
       );
       return false;
     }
-
+    dispatch(removeError);
     return true;
   };
 
   return (
     <>
-      <h3 className="auth__title">Register</h3>
+      <h3 className="auth__title">Registro</h3>
       <form onSubmit={handleRegister}>
+        {msgError && <div className="auth__alert-error">{msgError}</div>}
+
         <input
           type="text"
-          placeholder="Name"
+          placeholder="Nombre"
           name="name"
           className="auth__input"
           autoComplete="off"
@@ -61,7 +72,7 @@ export const RegisterScreen = () => {
         />
         <input
           type="password"
-          placeholder="Password"
+          placeholder="Contraseña"
           name="password"
           className="auth__input"
           value={password}
@@ -69,18 +80,18 @@ export const RegisterScreen = () => {
         />
         <input
           type="password"
-          placeholder="Confirm password"
+          placeholder="Confirmar contraseña"
           name="password2"
           className="auth__input"
           value={password2}
           onChange={handleInputChange}
         />
         <button type="submit" className="btn btn-primary btn-block mb-5">
-          Register
+          Registrarse
         </button>
 
         <Link to="/auth/login" className="link">
-          Already register ?
+          Ya estas registrado ?
         </Link>
       </form>
     </>

@@ -42,7 +42,7 @@ export const LoginScreen = () => {
         />
         <input
           type="password"
-          placeholder="Password"
+          placeholder="Contraseña"
           name="password"
           className="auth__input"
           value={password}
@@ -52,7 +52,7 @@ export const LoginScreen = () => {
           Login
         </button>
         <div className="auth__social-networks">
-          <p>Login with social networks</p>
+          <p>Login con redes sociales</p>
           <div className="google-btn" onClick={handleGoogleLogin}>
             <div className="google-icon-wrapper">
               <img
@@ -62,12 +62,12 @@ export const LoginScreen = () => {
               />
             </div>
             <p className="btn-text">
-              <b>Sign in with google</b>
+              <b>Sign in con google</b>
             </p>
           </div>
         </div>
         <Link to="/auth/register" className="link">
-          Create new account
+          Sos nuevo ? Registrate aca
         </Link>
       </form>
     </>
