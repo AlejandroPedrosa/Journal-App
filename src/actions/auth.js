@@ -4,6 +4,7 @@ import {
   getAuth,
   signInWithEmailAndPassword,
   signInWithPopup,
+  signOut,
   updateProfile,
 } from "firebase/auth";
 import { googleAuthProvider } from "../firebase/firebaseConfig";
@@ -55,4 +56,17 @@ export const login = (uid, displayName) => ({
     uid,
     displayName,
   },
+});
+
+export const startLogout = () => {
+  return async (dispatch) => {
+    const auth = getAuth();
+    await auth.signOut();
+
+    dispatch(logout());
+  };
+};
+
+export const logout = () => ({
+  type: types.logout,
 });
