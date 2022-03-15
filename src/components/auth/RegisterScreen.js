@@ -5,6 +5,7 @@ import validator from "validator";
 import { useDispatch, useSelector } from "react-redux";
 import { removeError, setError } from "../../actions/ui";
 import { startRegisterWithEmailPasswordName } from "../../actions/auth";
+import Swal from "sweetalert2";
 
 export const RegisterScreen = () => {
   const dispatch = useDispatch();
@@ -28,17 +29,19 @@ export const RegisterScreen = () => {
 
   const isFormValid = () => {
     if (name.trim().length === 0) {
-      dispatch(setError("El nombre no es valido"));
-
+      dispatch(setError());
+      Swal.fire("Error", "El nombre no es valido", "error");
       return false;
     } else if (!validator.isEmail(email)) {
-      dispatch(setError("El email no es valido"));
+      dispatch(setError());
+      Swal.fire("Error", "El email no es valido", "error");
       return false;
     } else if (password !== password2 || password.length < 5) {
-      dispatch(
-        setError(
-          "La contraseña debe tener al menos 6 caracteres y ser igual a su confirmacion"
-        )
+      dispatch(setError());
+      Swal.fire(
+        "Error",
+        "La contraseña debe tener al menos 6 caracteres y ser igual a su confirmacion",
+        "error"
       );
       return false;
     }
