@@ -1,12 +1,7 @@
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Redirect } from "react-router-dom";
 import { login } from "../actions/auth";
 import { startLoadingNotes } from "../actions/notes";
 import { JournalScreen } from "../components/journal/JournalScreen";
